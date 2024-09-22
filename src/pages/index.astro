@@ -1,0 +1,71 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+
+const todosLosPosts = await getCollection('blog');
+const postsOrdenados = todosLosPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const postMasReciente = postsOrdenados[0];
+const postsRecientes = postsOrdenados.slice(1, 4);
+
+const placeholderImage = '/placeholder.jpg';
+---
+
+<Layout 
+  title="Mi Blog en Astro" 
+  description="Bienvenido a mi blog personal donde comparto mis pensamientos y experiencias sobre tecnología, programación y más."
+>
+  <main class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold mb-8 text-gray-900 dark:text-gray-100">Bienvenido a Mi Blog</h1>
+
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Último Post</h2>
+      <article class="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
+        <Image 
+          src={postMasReciente.data.image || placeholderImage}
+          alt={postMasReciente.data.imageAlt || 'Imagen del post'}
+          width={800}
+          height={400}
+          class="w-full h-64 object-cover"
+        />
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-gray-100">{postMasReciente.data.title}</h3>
+          <p class="text-gray-600 dark:text-gray-400 mb-4">{postMasReciente.data.description}</p>
+          <a href={`/blog/${postMasReciente.slug}`} class="inline-block bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors">
+            Leer más
+          </a>
+        </div>
+      </article>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Posts Recientes</h2>
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {postsRecientes.map((post) => (
+          <article class="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
+            <Image 
+              src={post.data.image || placeholderImage}
+              alt={post.data.imageAlt || 'Imagen del post'}
+              width={400}
+              height={200}
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-lg font-bold mb-2 text-gray-900 dark:text-gray-100">{post.data.title}</h3>
+              <p class="text-gray-600 dark:text-gray-400 mb-4">{post.data.description}</p>
+              <a href={`/blog/${post.slug}`} class="inline-block bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors">
+                Leer más
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <div class="text-center">
+      <a href="/blog" class="inline-block bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors">
+        Ver todos los posts
+      </a>
+    </div>
+  </main>
+</Layout>

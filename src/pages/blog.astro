@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog');
+const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Layout title="Todos los Posts | Mi Blog en Astro">
+  <h1 class="text-4xl font-bold mb-8 text-gray-900 dark:text-gray-100">Todos los Posts</h1>
+  <div class="grid gap-8">
+    {sortedPosts.map((post) => (
+      <article class="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
+        <div class="p-6">
+          <h2 class="text-2xl font-bold mb-2">
+            <a href={`/blog/${post.slug}`} class="text-blue-600 dark:text-blue-400 hover:underline">
+              {post.data.title}
+            </a>
+          </h2>
+          <p class="text-gray-600 dark:text-gray-400 mb-4">{post.data.description}</p>
+          <p class="text-sm text-gray-500 dark:text-gray-500">
+            Publicado el: {post.data.pubDate.toLocaleDateString()}
+          </p>
+        </div>
+      </article>
+    ))}
+  </div>
+</Layout>
