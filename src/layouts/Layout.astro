@@ -24,6 +24,15 @@ const { title, description, image, lang = 'es' } = Astro.props;
     <ViewTransitions />
     <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1RKL9ZQJPL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-1RKL9ZQJPL');
+</script>
   <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
     <Nav />
     <main class="container max-w-[1250px] mx-auto mt-8 px-4">
