@@ -6,9 +6,11 @@ import sitemap from '@astrojs/sitemap';
 
 import robotsTxt from 'astro-robots-txt';
 
+import partytown from '@astrojs/partytown';
+
 export default defineConfig({
   site: 'https://chismesito.cl',
-  integrations: [tailwind(), sitemap(), robotsTxt()],
+  integrations: [tailwind(), sitemap(), robotsTxt(), partytown()],
   output: 'static',
   adapter: vercelStatic(),
 });

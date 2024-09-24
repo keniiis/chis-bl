@@ -1,4 +1,5 @@
 ---
+import GoogleAnalytics from '@components/GoogleAnalytics.astro';
 import { ViewTransitions } from 'astro:transitions';
 import '../styles/global.css';
 import SEO from '../components/SEO.astro';
@@ -17,6 +18,7 @@ const { title, description, image, lang = 'es' } = Astro.props;
 <!DOCTYPE html>
 <html lang={lang} class="transition-colors duration-300">
   <head>
+    <GoogleAnalytics />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <SEO title={title} description={description} image={image} />
@@ -24,15 +26,6 @@ const { title, description, image, lang = 'es' } = Astro.props;
     <ViewTransitions />
     <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
-  <!-- Google tag (gtag.js) -->
-  <script type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-1RKL9ZQJPL"></script>
-  <script type="text/partytown">
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-1RKL9ZQJPL');
-</script>
   <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
     <Nav />
     <main class="container max-w-[1250px] mx-auto mt-8 px-4">
