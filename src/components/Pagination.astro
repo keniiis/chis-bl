@@ -1,0 +1,50 @@
+---
+export interface Props {
+  currentPage: number;
+  totalPages: number;
+  baseUrl: string;
+}
+
+const { currentPage, totalPages, baseUrl } = Astro.props;
+
+const maxVisiblePages = 5;
+const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+const visiblePages = pageNumbers.slice(
+  Math.max(0, currentPage - Math.floor(maxVisiblePages / 2) - 1),
+  Math.min(totalPages, currentPage + Math.floor(maxVisiblePages / 2))
+);
+---
+
+<nav aria-label="Paginación" class="flex justify-center items-center space-x-2 my-8">
+  <a href={currentPage > 1 ? `${baseUrl}/${currentPage - 1}` : baseUrl} class={`px-3 py-2 rounded-md ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-100'}`} aria-disabled={currentPage === 1}>
+    &lt;
+  </a>
+  
+  {visiblePages[0] > 1 && (
+    <>
+      <a href={baseUrl} class="px-3 py-2 rounded-md text-blue-600 hover:bg-blue-100">1</a>
+      {visiblePages[0] > 2 && <span class="px-3 py-2">...</span>}
+    </>
+  )}
+  
+  {visiblePages.map((pageNum) => (
+    <a
+      href={pageNum === 1 ? baseUrl : `${baseUrl}/${pageNum}`}
+      class={`px-3 py-2 rounded-md ${pageNum === currentPage ? 'bg-blue-600 text-white' : 'text-blue-600 hover:bg-blue-100'}`}
+      aria-current={pageNum === currentPage ? 'page' : undefined}
+    >
+      {pageNum}
+    </a>
+  ))}
+  
+  {visiblePages[visiblePages.length - 1] < totalPages && (
+    <>
+      {visiblePages[visiblePages.length - 1] < totalPages - 1 && <span class="px-3 py-2">...</span>}
+      <a href={`${baseUrl}/${totalPages}`} class="px-3 py-2 rounded-md text-blue-600 hover:bg-blue-100">{totalPages}</a>
+    </>
+  )}
+  
+  <a href={currentPage < totalPages ? `${baseUrl}/${currentPage + 1}` : `${baseUrl}/${totalPages}`} class={`px-3 py-2 rounded-md ${currentPage === totalPages ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-100'}`} aria-disabled={currentPage === totalPages}>
+    &gt;
+  </a>
+</nav>
