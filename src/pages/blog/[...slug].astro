@@ -88,7 +88,7 @@ const schemaBlogPost = {
     <h2 class="text-3xl font-bold mb-8 text-gray-800 dark:text-gray-200">Posts Recientes</h2>
     <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
       {recentPosts.map((post) => (
-        <article class="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+        <article class="bg-[#f7dbed] dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:scale-105">
           <Image 
             src={post.data.image || placeholderImage}
             alt={post.data.imageAlt || 'Imagen del post'}
