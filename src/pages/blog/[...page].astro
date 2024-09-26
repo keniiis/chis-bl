@@ -4,13 +4,19 @@ import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import Pagination from '../../components/Pagination.astro';
 
+interface PageData {
+  data: any[];
+  currentPage: number;
+  lastPage: number;
+}
+
 export async function getStaticPaths({ paginate }) {
   const allPosts = await getCollection('blog');
   const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
   return paginate(sortedPosts, { pageSize: 9 });
 }
 
-const { page } = Astro.props;
+const { page }: { page: PageData } = Astro.props;
 const placeholderImage = '/placeholder.jpg';
 ---
 

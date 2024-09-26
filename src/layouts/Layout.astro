@@ -16,7 +16,7 @@ const { title, description, image, lang = 'es' } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang={lang} class="transition-colors duration-300 dark">
+<html lang={lang} class="transition-colors duration-300">
   <head>
     <GoogleAnalytics />
     <meta charset="UTF-8" />
@@ -24,59 +24,20 @@ const { title, description, image, lang = 'es' } = Astro.props;
     <SEO title={title} description={description} image={image} />
     <meta name="generator" content={Astro.generator} />
     <ViewTransitions />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
-  <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+  <body class="bg-[#edc6de] text-gray-900 transition-colors duration-300 font-ffamily">
     <Nav />
     <main class="container max-w-[1250px] mx-auto mt-8 px-4">
       <slot />
     </main>
-    <footer class="bg-gray-200 dark:bg-gray-800 mt-12 py-4">
-      <div class="container mx-auto text-center text-gray-600 dark:text-gray-400">
+    <footer class="bg-[#f7dbed] mt-12 py-4">
+      <div class="container mx-auto text-center text-black">
         <p>&copy; 2024 Mi Blog en Astro. Todos los derechos reservados.</p>
       </div>
     </footer>
-    <button id="dark-mode-toggle" aria-label="Cambiar modo oscuro" class="fixed bottom-4 right-4 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 p-2 rounded-full shadow-lg">
-      <span class="sr-only">Cambiar modo</span>
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-      </svg>
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-      </svg>
-    </button>
   </body>
 </html>
-
-<script>
-  import { setupTheme } from '../script/theme';
-
-  function setupDarkMode() {
-    setupTheme();
-    const darkModeToggle = document.getElementById('dark-mode-toggle');
-    const html = document.documentElement;
-
-    function toggleDarkMode() {
-      const newTheme = html.classList.contains('dark') ? 'light' : 'dark';
-      html.classList.toggle('dark');
-      localStorage.setItem('theme', newTheme);
-      updateToggleButtonLabel(newTheme);
-    }
-
-    function updateToggleButtonLabel(theme: string) {
-      const srOnlySpan = darkModeToggle?.querySelector('.sr-only');
-      if (srOnlySpan instanceof HTMLElement) {
-        srOnlySpan.textContent = `Cambiar a modo ${theme === 'dark' ? 'claro' : 'oscuro'}`;
-      }
-    }
-
-    if (darkModeToggle) {
-      darkModeToggle.addEventListener('click', toggleDarkMode);
-    }
-
-    // Inicializar el texto del botón
-    updateToggleButtonLabel(localStorage.getItem('theme') || 'light');
-  }
-
-  document.addEventListener('astro:page-load', setupDarkMode);
-</script>
