@@ -1,6 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import SchemaOrg from '../../components/SchemaOrg.astro';
 import SocialShare from '../../components/SocialShare.astro';
 import { Image } from 'astro:assets';
 import { formatDate } from '../../utils/dateUtils';
@@ -30,9 +31,36 @@ const recentPosts = allPosts
 
 // Imagen de marcador de posición
 const placeholderImage = '/placeholder.jpg';
+
+const schemaBlogPost = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": entry.data.title,
+  "image": entry.data.image ? new URL(entry.data.image, Astro.site).href : undefined,
+  "author": {
+    "@type": "Person",
+    "name": entry.data.author || "Chismesito Team"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Chismesito Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": new URL("/logo.png", Astro.site).href
+    }
+  },
+  "datePublished": entry.data.pubDate.toISOString(),
+  "dateModified": entry.data.updatedDate ? entry.data.updatedDate.toISOString() : entry.data.pubDate.toISOString(),
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": new URL(Astro.url.pathname, Astro.site).href
+  },
+  "description": entry.data.description
+};
 ---
 
 <Layout title={entry.data.title} description={entry.data.description || `Lee sobre ${entry.data.title} en nuestro blog.`}>
+  <SchemaOrg schema={schemaBlogPost} />
   <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-balance text-center leading-tight font-bold mb-8 text-gray-900 dark:text-[#db7e45]">
       {entry.data.title}

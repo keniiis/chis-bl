@@ -1,5 +1,6 @@
 ---
 title: 'Carlyn Romero es sancionada en Gran Hermano'
+author: "Chismesito Team"
 description: 'Carlyn Romero recibe dura sanción por violar reglas del reality'
 pubDate: 2024-09-23
 image: '/images/blog-images/carlyn-romero-gran-hermano.webp'

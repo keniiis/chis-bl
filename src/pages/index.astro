@@ -9,9 +9,25 @@ const featuredPost = sortedPosts[0];
 const recentPosts = sortedPosts.slice(1, 4);
 
 const placeholderImage = '/placeholder.jpg';
+
+import SchemaOrg from '../components/SchemaOrg.astro';
+
+const schemaHomepage = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Chismesito Blog",
+  "url": "https://chismesito.cl",
+  "description": "Explora los últimos chismes y noticias en nuestro blog",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://chismesito.cl/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+};
 ---
 
 <Layout title="Bienvenido al Chismesito 🤭" description="Explora los últimos chismes y noticias en nuestro blog">
+  <SchemaOrg schema={schemaHomepage} />
   <h1 class="text-4xl font-bold mb-8">Bienvenido al Chismesito 🤭</h1>
 
   <section class="mb-12">

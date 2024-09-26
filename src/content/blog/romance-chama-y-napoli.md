@@ -1,5 +1,6 @@
 ---
 title: 'Chama y Manuel Napoli sorprenden a todos'
+author: "Chismesito Team"
 description: 'Romance entre la Chama y Manuel Napoli.'
 pubDate: 2024-09-22
 image: '/images/blog-images/ita-ven.webp'
