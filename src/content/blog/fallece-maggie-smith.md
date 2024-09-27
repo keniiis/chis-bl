@@ -2,7 +2,7 @@
 title: 'La Despedida a Maggie Smith: Un Ícono del Cine y el Teatro'
 author: "Chismesito Team"
 description: 'Recordando la vida y carrera de la legendaria actriz.'
-pubDate: 2024-09-28
+pubDate: 2024-09-27
 image: '/images/blog-images/maggie-smith.webp'
 imageAlt: 'Maggie Smith junto a Downton Abbey y Violet, Shirley MacLaine'
 ---
