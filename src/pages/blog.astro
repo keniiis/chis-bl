@@ -37,7 +37,7 @@ const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
           alt={post.data.imageAlt || 'Imagen del post'}
           width={400}
           height={200}
-          class="w-full h-48 object-cover"
+          class="w-full h-48 object-cover" loading="eager" decoding="async"
         />
         <div class="p-6 bg-[#f7dbed]">
           <h3 class="text-xl font-semibold text-gray-900 mb-2">{post.data.title}</h3>
