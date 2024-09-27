@@ -1,0 +1,16 @@
+---
+export interface Props {
+  type: 'popunder' | 'socialbar';
+}
+
+const { type } = Astro.props;
+---
+
+<div class="ad-container">
+  {type === 'popunder' && (
+    <script async src="//pl24515639.cpmrevenuegate.com/32/ec/79/32ec79a288cf197483f5dafe35671e3a.js"></script>
+  )}
+  {type === 'socialbar' && (
+    <script async src="//pl24515694.cpmrevenuegate.com/12/7f/4f/127f4f19c0f0cc46a167b2eb2b003f9f.js"></script>
+  )}
+</div>
