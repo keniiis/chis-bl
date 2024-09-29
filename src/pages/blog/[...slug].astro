@@ -31,15 +31,13 @@ const recentPosts = allPosts
   .slice(0, 3);
 
 // Imagen de marcador de posición
-const placeholderImage = '/placeholder.jpg'; // Define una imagen predeterminada
-
-const postImage = entry.data.image ? new URL(entry.data.image, Astro.site).href : new URL(placeholderImage, Astro.site).href;
+const placeholderImage = '/placeholder.jpg';
 
 const schemaBlogPost = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": entry.data.title,
-  "image": postImage,
+  "image": entry.data.image ? new URL(entry.data.image, Astro.site).href : undefined,
   "author": {
     "@type": "Person",
     "name": entry.data.author || "Chismesito Team"
@@ -62,6 +60,8 @@ const schemaBlogPost = {
 };
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+
+const postImage = new URL(entry.data.image, Astro.site).toString();
 ---
 
 <Layout title={entry.data.title} description={entry.data.description}>
@@ -81,7 +81,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
     
     {entry.data.image && (
       <Image 
-        src={postImage} 
+        src={entry.data.image} 
         alt={entry.data.imageAlt || ''} 
         width={1200} 
         height={630} 
@@ -123,7 +123,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
     </div>
   </section>
 </Layout>
-
 
 <style>
   /* Estilos globales para el contenido */
