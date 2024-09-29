@@ -9,7 +9,6 @@ export interface Props {
 const { 
   title, 
   description, 
-  image = '/default-og-image.jpg',
   canonicalURL = new URL(Astro.url.pathname, Astro.site).toString()
 } = Astro.props;
 

@@ -1,14 +1,9 @@
----
-import { Image } from 'astro:assets';
-import logoLight from '../assets/Chismesito_logo_negro.svg';
----
-
 <nav class="bg-[#f7dbed] shadow-lg">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-[6rem]">
       <div class="flex items-center">
         <a href="/" class="flex items-center" aria-label="Ir a la página de inicio">
-          <Image src={logoLight} alt="Chismesito Logo" width={511} height={264} class="h-12 lg:h-20 w-auto block" loading="eager" decoding="async"/> 
+          <img src=/Chismesito_logo_negro.svg alt="Chismesito Logo" width={511} height={264} class="h-12 lg:h-20 w-auto block" loading="eager" decoding="async"></img> 
         </a>
       </div>
       <div class="hidden md:block border border-slate-900 rounded-[30px] p-[10px]">
