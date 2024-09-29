@@ -58,16 +58,18 @@ const schemaBlogPost = {
   },
   "description": entry.data.description
 };
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 
-<Layout title={entry.data.title} description={entry.data.description || `Lee sobre ${entry.data.title} en nuestro blog.`}>
+<Layout title={entry.data.title} description={entry.data.description}>
   <SEO 
-  title={entry.data.title}
-  description={entry.data.description || `Lee sobre ${entry.data.title} en nuestro blog.`}
-  image={entry.data.image}
-  imageAlt={entry.data.imageAlt || entry.data.title}
-  canonicalURL={url}
-  type="article"
+    title={entry.data.title}
+    description={entry.data.description}
+    image={entry.data.image}
+    imageAlt={entry.data.imageAlt || entry.data.title}
+    canonicalURL={canonicalURL}
+    type="article"
   />
   <SchemaOrg schema={schemaBlogPost} />
   <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

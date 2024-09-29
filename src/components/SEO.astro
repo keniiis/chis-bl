@@ -5,16 +5,16 @@ export interface Props {
   image?: string;
   imageAlt?: string;
   canonicalURL?: string;
-  type?: 'website' | 'article';
+  type: 'website' | 'article';
 }
 
 const { 
   title, 
   description, 
   image = "https://res.cloudinary.com/dnxqyczba/image/upload/v1727353583/og-image_wtuwus.webp",
-  imageAlt = "",
+  imageAlt,
   canonicalURL = new URL(Astro.url.pathname, Astro.site).toString(),
-  type = 'website'
+  type
 } = Astro.props;
 
 const siteTitle = 'Chismesito Blog';
@@ -32,7 +32,7 @@ const fullTitle = `${title} | ${siteTitle}`;
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={image} />
-<meta property="og:image:alt" content={imageAlt} />
+<meta property="og:image:alt" content={imageAlt || title} />
 <meta property="og:site_name" content={siteTitle} />
 
 <!-- Twitter -->
@@ -41,7 +41,7 @@ const fullTitle = `${title} | ${siteTitle}`;
 <meta property="twitter:title" content={fullTitle} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={image} />
-<meta property="twitter:image:alt" content={imageAlt} />
+<meta property="twitter:image:alt" content={imageAlt || title} />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
