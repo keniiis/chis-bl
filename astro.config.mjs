@@ -30,9 +30,4 @@ export default defineConfig({
   ],
   output: 'static',
   adapter: vercelStatic(),
-  buildOptions: {
-    assets: {
-      hash: false, // Desactiva el hash en los nombres de archivo
-    },
-  }
 });
