@@ -4,36 +4,42 @@ export interface Props {
   description: string;
   image?: string;
   canonicalURL?: string;
+  type?: 'website' | 'article';
 }
 
 const { 
   title, 
   description, 
-  canonicalURL = new URL(Astro.url.pathname, Astro.site).toString()
+  image = "https://res.cloudinary.com/dnxqyczba/image/upload/v1727353583/og-image_wtuwus.webp",
+  canonicalURL = new URL(Astro.url.pathname, Astro.site).toString(),
+  type = 'website'
 } = Astro.props;
 
 const siteTitle = 'Chismesito Blog';
+const fullTitle = `${title} | ${siteTitle}`;
 ---
 
 <!-- Primary Meta Tags -->
-<title>{title} | {siteTitle}</title>
-<meta name="title" content={`${title} | ${siteTitle}`} />
+<title>{fullTitle}</title>
+<meta name="title" content={fullTitle} />
 <meta name="description" content={description} />
 
 <!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://www.chismesito.cl/" />
-<meta property="og:title" content="Bienvenido al Chismesito 🤭 | Chismesito Blog" />
-<meta property="og:description" content="Explora los últimos chismes y noticias en nuestro blog" />
-<meta property="og:image" content="https://res.cloudinary.com/dnxqyczba/image/upload/v1727353583/og-image_wtuwus.webp" />
-<meta property="og:image" content="https://res.cloudinary.com/dnxqyczba/image/upload/v1727355739/square-og_rasrbd.webp"> <!-- para whatsapp -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={image} />
+<meta property="og:image:alt" content={title} />
+<meta property="og:site_name" content={siteTitle} />
+<!-- <meta property="fb:app_id" content="TU_FB_APP_ID" /> -->
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content="https://www.chismesito.cl/" />
-<meta property="twitter:title" content="Bienvenido al Chismesito 🤭 | Chismesito Blog" />
-<meta property="twitter:description" content="Explora los últimos chismes y noticias en nuestro blog" />
-<meta property="twitter:image" content="https://res.cloudinary.com/dnxqyczba/image/upload/v1727353583/og-image_wtuwus.webp" />
+<meta property="twitter:url" content={canonicalURL} />
+<meta property="twitter:title" content={fullTitle} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={image} />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
