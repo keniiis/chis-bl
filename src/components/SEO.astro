@@ -19,6 +19,8 @@ const {
 
 const siteTitle = 'Chismesito Blog';
 const fullTitle = `${title} | ${siteTitle}`;
+const placeholderImage = 'https://res.cloudinary.com/dnxqyczba/image/upload/v1727355739/square-og_rasrbd.webp';
+const postImage = image ? new URL(image, Astro.site).href : placeholderImage;
 ---
 
 <!-- Primary Meta Tags -->
@@ -31,8 +33,7 @@ const fullTitle = `${title} | ${siteTitle}`;
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, Astro.site).href} />
-<meta property="og:image" content="https://res.cloudinary.com/dnxqyczba/image/upload/v1727355739/square-og_rasrbd.webp"> <!-- para whatsapp -->
+<meta property="og:image" content={postImage} /> <!-- Imagen segura para Open Graph -->
 <meta property="og:image:alt" content={imageAlt} />
 <meta property="og:site_name" content={siteTitle} />
 
@@ -41,7 +42,7 @@ const fullTitle = `${title} | ${siteTitle}`;
 <meta property="twitter:url" content={canonicalURL} />
 <meta property="twitter:title" content={fullTitle} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image, Astro.site).href} />
+<meta property="twitter:image" content={postImage} /> <!-- Imagen segura para Twitter -->
 <meta property="twitter:image:alt" content={imageAlt} />
 
 <!-- Canonical URL -->
