@@ -60,13 +60,15 @@ const schemaBlogPost = {
 };
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+
+const postImage = new URL(entry.data.image, Astro.site).toString();
 ---
 
 <Layout title={entry.data.title} description={entry.data.description}>
   <SEO 
     title={entry.data.title}
     description={entry.data.description}
-    image={entry.data.image}
+    image={postImage}
     imageAlt={entry.data.imageAlt || entry.data.title}
     canonicalURL={canonicalURL}
     type="article"
