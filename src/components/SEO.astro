@@ -3,6 +3,7 @@ export interface Props {
   title: string;
   description: string;
   image?: string;
+  imageAlt?: string;
   canonicalURL?: string;
   type?: 'website' | 'article';
 }
@@ -11,6 +12,7 @@ const {
   title, 
   description, 
   image = "https://res.cloudinary.com/dnxqyczba/image/upload/v1727353583/og-image_wtuwus.webp",
+  imageAlt = "",
   canonicalURL = new URL(Astro.url.pathname, Astro.site).toString(),
   type = 'website'
 } = Astro.props;
@@ -30,9 +32,8 @@ const fullTitle = `${title} | ${siteTitle}`;
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={image} />
-<meta property="og:image:alt" content={title} />
+<meta property="og:image:alt" content={imageAlt} />
 <meta property="og:site_name" content={siteTitle} />
-<!-- <meta property="fb:app_id" content="TU_FB_APP_ID" /> -->
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
@@ -40,6 +41,7 @@ const fullTitle = `${title} | ${siteTitle}`;
 <meta property="twitter:title" content={fullTitle} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={image} />
+<meta property="twitter:image:alt" content={imageAlt} />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
