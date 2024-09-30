@@ -34,13 +34,15 @@ const recentPosts = allPosts
 const placeholderImage = '/images/default-og-image.jpg';
 
 // Usa la imagen del post si está disponible, de lo contrario usa una imagen por defecto
-const postImage = entry.data.image || placeholderImage;
+const postImage = entry.data.image 
+  ? new URL(entry.data.image, Astro.site).toString()
+  : new URL(placeholderImage, Astro.site).toString();
 
 const schemaBlogPost = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": entry.data.title,
-  "image": new URL(postImage, Astro.site).href,
+  "image": postImage,
   "author": {
     "@type": "Person",
     "name": entry.data.author || "Chismesito Team"
@@ -102,7 +104,7 @@ const schemaBlogPost = {
       {recentPosts.map((post) => (
         <article class="bg-[#f7dbed] shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:scale-105">
           <Image 
-            src={post.data.image || placeholderImage}
+            src={post.data.image ? new URL(post.data.image, Astro.site).toString() : new URL(placeholderImage, Astro.site).toString()}
             alt={post.data.imageAlt || post.data.title}
             width={400}
             height={200}
