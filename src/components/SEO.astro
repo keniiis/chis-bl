@@ -27,6 +27,9 @@ const fullImageUrl = image.startsWith('http')
 
 // Asegúrate de que fullImageUrl sea una cadena válida
 const safeImageUrl = fullImageUrl || new URL('/images/default-og-image.jpg', Astro.site).toString();
+
+// Asegúrate de que la URL canónica termine con una barra diagonal
+const safeCanonicalURL = canonicalURL.endsWith('/') ? canonicalURL : `${canonicalURL}/`;
 ---
 
 <!-- Primary Meta Tags -->
@@ -36,7 +39,7 @@ const safeImageUrl = fullImageUrl || new URL('/images/default-og-image.jpg', Ast
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content={type} />
-<meta property="og:url" content={canonicalURL} />
+<meta property="og:url" content={safeCanonicalURL} />
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={safeImageUrl} />
@@ -45,14 +48,14 @@ const safeImageUrl = fullImageUrl || new URL('/images/default-og-image.jpg', Ast
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={canonicalURL} />
+<meta property="twitter:url" content={safeCanonicalURL} />
 <meta property="twitter:title" content={fullTitle} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={safeImageUrl} />
 <meta property="twitter:image:alt" content={imageAlt || title} />
 
 <!-- Canonical URL -->
-<link rel="canonical" href={canonicalURL} />
+<link rel="canonical" href={safeCanonicalURL} />
 
 <!-- Favicon -->
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">

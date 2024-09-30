@@ -1,7 +1,7 @@
 ---
 title: 'Cony Capelli regresa a Gran Hermano para sorprender a los concursantes'
 author: 'Chismesito Team'
-description: 'Vuelve la ganadora de la primera temporada  para un evento especial dentro de la casa.'
+description: 'Vuelve la ganadora de la primera temporada para un evento especial dentro de la casa.'
 pubDate: 2024-09-28
 image: '/images/blog-images/cony-capelli.webp'
 imageAlt: 'Cony Capelli de regreso a Gran Hermano'

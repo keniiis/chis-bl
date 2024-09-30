@@ -22,6 +22,7 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+const safeCanonicalURL = canonicalURL.endsWith('/') ? canonicalURL : `${canonicalURL}/`;
 
 // Obtener posts recientes
 const allPosts = await getCollection('blog');
@@ -59,7 +60,7 @@ const schemaBlogPost = {
   "dateModified": entry.data.updatedDate ? entry.data.updatedDate.toISOString() : entry.data.pubDate.toISOString(),
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": canonicalURL
+    "@id": safeCanonicalURL
   },
   "description": entry.data.description
 };
@@ -71,7 +72,7 @@ const schemaBlogPost = {
     description={entry.data.description}
     image={postImage}
     imageAlt={entry.data.imageAlt || entry.data.title}
-    canonicalURL={canonicalURL}
+    canonicalURL={safeCanonicalURL}
     type="article"
   />
   <SchemaOrg schema={schemaBlogPost} />
@@ -94,7 +95,7 @@ const schemaBlogPost = {
       <Content />
     </div>
     <div class="mt-12">
-      <SocialShare url={canonicalURL} title={entry.data.title} />
+      <SocialShare url={safeCanonicalURL} title={entry.data.title} />
     </div>
   </article>
 
@@ -113,7 +114,7 @@ const schemaBlogPost = {
           <div class="p-6 flex flex-col justify-between h-[300px]">
             <h3 class="text-xl font-bold mb-3 text-gray-900">{post.data.title}</h3>
             <p class="text-gray-600 mb-4 line-clamp-2">{post.data.description}</p>
-            <a href={`/blog/${post.slug}`} class="inline-block bg-black text-white py-2 px-4 rounded-3xl hover:bg-[#272727] transition-colors duration-300 ease-in-out w-fit">
+            <a href={`/blog/${post.slug}/`} class="inline-block bg-black text-white py-2 px-4 rounded-3xl hover:bg-[#272727] transition-colors duration-300 ease-in-out w-fit">
               Leer más
             </a>
           </div>
