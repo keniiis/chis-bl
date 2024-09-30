@@ -3,12 +3,14 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
-// Para obtener correctamente __dirname en ES Modules
+// Obtener __dirname en módulos ES
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const sourceDir = path.join(__dirname, '../public/images');
-const targetDir = path.join(__dirname, '../.vercel/output/static/images');
+// Definir las rutas de origen y destino
+const sourceDir: string = path.join(__dirname, '../public/images');
+const targetDir: string = path.join(__dirname, '../.vercel/output/static/images');
 
+// Copiar las imágenes
 fs.copySync(sourceDir, targetDir, { overwrite: true });
 console.log('Images copied successfully');

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build && node src/scripts/copy-images.js",
+    "build": "astro build && ts-node src/scripts/copy-images.ts",
     "preview": "astro preview",
     "astro": "astro",
     "clean": "rimraf dist .astro"
@@ -17,6 +17,7 @@
     "@astrojs/vercel": "^7.8.1",
     "astro": "^4.15.8",
     "astro-robots-txt": "^1.0.0",
+    "fs-extra": "^11.2.0",
     "typescript": "^5.6.2"
   },
   "devDependencies": {
