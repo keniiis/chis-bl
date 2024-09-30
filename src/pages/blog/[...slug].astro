@@ -21,8 +21,7 @@ interface Props {
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
-const safeCanonicalURL = canonicalURL.endsWith('/') ? canonicalURL : `${canonicalURL}/`;
+const url = new URL(Astro.url.pathname, Astro.site).toString();
 
 // Obtener posts recientes
 const allPosts = await getCollection('blog');
@@ -32,18 +31,13 @@ const recentPosts = allPosts
   .slice(0, 3);
 
 // Imagen de marcador de posición
-const placeholderImage = '/images/default-og-image.jpg';
-
-// Usa la imagen del post si está disponible, de lo contrario usa una imagen por defecto
-const postImage = entry.data.image 
-  ? new URL(entry.data.image, Astro.site).toString()
-  : new URL(placeholderImage, Astro.site).toString();
+const placeholderImage = '/placeholder.jpg';
 
 const schemaBlogPost = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": entry.data.title,
-  "image": postImage,
+  "image": entry.data.image ? new URL(entry.data.image, Astro.site).href : undefined,
   "author": {
     "@type": "Person",
     "name": entry.data.author || "Chismesito Team"
@@ -60,10 +54,14 @@ const schemaBlogPost = {
   "dateModified": entry.data.updatedDate ? entry.data.updatedDate.toISOString() : entry.data.pubDate.toISOString(),
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": safeCanonicalURL
+    "@id": url
   },
   "description": entry.data.description
 };
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+
+const postImage = new URL(entry.data.image, Astro.site).toString();
 ---
 
 <Layout title={entry.data.title} description={entry.data.description}>
@@ -72,49 +70,51 @@ const schemaBlogPost = {
     description={entry.data.description}
     image={postImage}
     imageAlt={entry.data.imageAlt || entry.data.title}
-    canonicalURL={safeCanonicalURL}
+    canonicalURL={canonicalURL}
     type="article"
   />
   <SchemaOrg schema={schemaBlogPost} />
   <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <h1 class="text-texto-principal text-balance text-center leading-tight font-bold mb-8 text-black">
+    <h1 class="text-texto-principal text-balance text-center leading-tight font-bold mb-8 text-black dark:text-[#db7e45]">
       {entry.data.title}
     </h1>
     
-    <Image 
-      src={postImage}
-      alt={entry.data.imageAlt || entry.data.title}
-      width={1200} 
-      height={630} 
-      loading="eager"
-      decoding="async"
-      class="w-full h-auto rounded-lg shadow-md mb-8 object-cover" 
-    />
+    {entry.data.image && (
+      <Image 
+        src={entry.data.image} 
+        alt={entry.data.imageAlt || ''} 
+        width={1200} 
+        height={630} 
+        loading="eager"
+        decoding="async"
+        class="w-full h-auto rounded-lg shadow-md mb-8 object-cover" 
+      />
+    )}
     <p class="text-[#1c51a7] text-center mb-8">Publicado el: {formatDate(entry.data.pubDate)}</p>
-    <div class="content prose lg:prose-xl mx-auto">
+    <div class="content prose lg:prose-xl dark:prose-invert mx-auto">
       <Content />
     </div>
     <div class="mt-12">
-      <SocialShare url={safeCanonicalURL} title={entry.data.title} />
+      <SocialShare url={url} title={entry.data.title} />
     </div>
   </article>
 
   <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <h2 class="text-3xl font-bold mb-8 text-gray-800">Posts Recientes</h2>
+    <h2 class="text-3xl font-bold mb-8 text-gray-800 dark:text-gray-200">Posts Recientes</h2>
     <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
       {recentPosts.map((post) => (
-        <article class="bg-[#f7dbed] shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+        <article class="bg-[#f7dbed] dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:scale-105">
           <Image 
-            src={post.data.image ? new URL(post.data.image, Astro.site).toString() : new URL(placeholderImage, Astro.site).toString()}
-            alt={post.data.imageAlt || post.data.title}
+            src={post.data.image || placeholderImage}
+            alt={post.data.imageAlt || 'Imagen del post'}
             width={400}
             height={200}
             class="w-full h-48 object-cover"
           />
           <div class="p-6 flex flex-col justify-between h-[300px]">
-            <h3 class="text-xl font-bold mb-3 text-gray-900">{post.data.title}</h3>
-            <p class="text-gray-600 mb-4 line-clamp-2">{post.data.description}</p>
-            <a href={`/blog/${post.slug}/`} class="inline-block bg-black text-white py-2 px-4 rounded-3xl hover:bg-[#272727] transition-colors duration-300 ease-in-out w-fit">
+            <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-gray-100">{post.data.title}</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">{post.data.description}</p>
+            <a href={`/blog/${post.slug}`} class="inline-block bg-black text-white py-2 px-4 rounded-3xl hover:bg-[#272727] transition-colors duration-300 ease-in-out w-fit">
               Leer más
             </a>
           </div>

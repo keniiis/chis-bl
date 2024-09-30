@@ -2,34 +2,23 @@
 export interface Props {
   title: string;
   description: string;
-  image?: string;
-  imageAlt?: string;
-  canonicalURL?: string;
-  type?: 'website' | 'article';
+  image: string;
+  imageAlt: string;
+  canonicalURL: string;
+  type: 'website' | 'article';
 }
 
 const { 
   title, 
   description, 
-  image = '/images/default-og-image.jpg',
-  imageAlt = '',
-  canonicalURL = new URL(Astro.url.pathname, Astro.site).toString(),
-  type = 'website'
+  image,
+  imageAlt,
+  canonicalURL,
+  type
 } = Astro.props;
 
 const siteTitle = 'Chismesito Blog';
 const fullTitle = `${title} | ${siteTitle}`;
-
-// Asegúrate de que la imagen tenga una URL completa
-const fullImageUrl = image.startsWith('http') 
-  ? image 
-  : new URL(image, Astro.site).toString();
-
-// Asegúrate de que fullImageUrl sea una cadena válida
-const safeImageUrl = fullImageUrl || new URL('/images/default-og-image.jpg', Astro.site).toString();
-
-// Asegúrate de que la URL canónica termine con una barra diagonal
-const safeCanonicalURL = canonicalURL.endsWith('/') ? canonicalURL : `${canonicalURL}/`;
 ---
 
 <!-- Primary Meta Tags -->
@@ -39,23 +28,23 @@ const safeCanonicalURL = canonicalURL.endsWith('/') ? canonicalURL : `${canonica
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content={type} />
-<meta property="og:url" content={safeCanonicalURL} />
+<meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={safeImageUrl} />
-<meta property="og:image:alt" content={imageAlt || title} />
+<meta property="og:image" content={new URL(image, Astro.site).href} />
+<meta property="og:image:alt" content={imageAlt} />
 <meta property="og:site_name" content={siteTitle} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={safeCanonicalURL} />
+<meta property="twitter:url" content={canonicalURL} />
 <meta property="twitter:title" content={fullTitle} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={safeImageUrl} />
-<meta property="twitter:image:alt" content={imageAlt || title} />
+<meta property="twitter:image" content={new URL(image, Astro.site).href} />
+<meta property="twitter:image:alt" content={imageAlt} />
 
 <!-- Canonical URL -->
-<link rel="canonical" href={safeCanonicalURL} />
+<link rel="canonical" href={canonicalURL} />
 
 <!-- Favicon -->
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
