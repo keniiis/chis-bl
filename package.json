@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build && ts-node src/scripts/copy-images.ts",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
     "clean": "rimraf dist .astro"
