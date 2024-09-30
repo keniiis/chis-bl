@@ -78,17 +78,15 @@ const schemaBlogPost = {
       {entry.data.title}
     </h1>
     
-    {postImage && (
-      <Image 
-        src={postImage}
-        alt={entry.data.imageAlt || entry.data.title}
-        width={1200} 
-        height={630} 
-        loading="eager"
-        decoding="async"
-        class="w-full h-auto rounded-lg shadow-md mb-8 object-cover" 
-      />
-    )}
+    <Image 
+      src={postImage}
+      alt={entry.data.imageAlt || entry.data.title}
+      width={1200} 
+      height={630} 
+      loading="eager"
+      decoding="async"
+      class="w-full h-auto rounded-lg shadow-md mb-8 object-cover" 
+    />
     <p class="text-[#1c51a7] text-center mb-8">Publicado el: {formatDate(entry.data.pubDate)}</p>
     <div class="content prose lg:prose-xl mx-auto">
       <Content />
