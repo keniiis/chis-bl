@@ -31,7 +31,7 @@ const recentPosts = allPosts
   .slice(0, 3);
 
 // Imagen de marcador de posición
-const placeholderImage = '/images/placeholder.jpg';
+const placeholderImage = '/images/default-og-image.jpg';
 
 // Usa la imagen del post si está disponible, de lo contrario usa una imagen por defecto
 const postImage = entry.data.image || placeholderImage;
@@ -78,10 +78,10 @@ const schemaBlogPost = {
       {entry.data.title}
     </h1>
     
-    {entry.data.image && (
+    {postImage && (
       <Image 
-        src={entry.data.image} 
-        alt={entry.data.imageAlt || entry.data.title} 
+        src={postImage}
+        alt={entry.data.imageAlt || entry.data.title}
         width={1200} 
         height={630} 
         loading="eager"
