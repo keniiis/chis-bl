@@ -7,7 +7,6 @@ import partytown from '@astrojs/partytown';
 
 export default defineConfig({
   site: 'https://www.chismesito.cl',
-  trailingSlash: 'always',
   integrations: [
     tailwind(),
     sitemap(),
