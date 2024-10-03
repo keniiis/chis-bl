@@ -22,6 +22,7 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 
 const url = new URL(Astro.url.pathname, Astro.site).toString();
+const canonicalURL = url;
 
 // Obtener posts recientes
 const allPosts = await getCollection('blog');
@@ -33,11 +34,13 @@ const recentPosts = allPosts
 // Imagen de marcador de posición
 const placeholderImage = '/placeholder.jpg';
 
+const postImage = entry.data.image ? new URL(entry.data.image, Astro.site).href : new URL(placeholderImage, Astro.site).href;
+
 const schemaBlogPost = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": entry.data.title,
-  "image": entry.data.image ? new URL(entry.data.image, Astro.site).href : undefined,
+  "image": postImage,
   "author": {
     "@type": "Person",
     "name": entry.data.author || "Chismesito Team"
@@ -58,10 +61,6 @@ const schemaBlogPost = {
   },
   "description": entry.data.description
 };
-
-const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
-
-const postImage = new URL(entry.data.image, Astro.site).toString();
 ---
 
 <Layout title={entry.data.title} description={entry.data.description}>
@@ -79,17 +78,15 @@ const postImage = new URL(entry.data.image, Astro.site).toString();
       {entry.data.title}
     </h1>
     
-    {entry.data.image && (
-      <Image 
-        src={entry.data.image} 
-        alt={entry.data.imageAlt || ''} 
-        width={1200} 
-        height={630} 
-        loading="eager"
-        decoding="async"
-        class="w-full h-auto rounded-lg shadow-md mb-8 object-cover" 
-      />
-    )}
+    <Image 
+      src={postImage}
+      alt={entry.data.imageAlt || entry.data.title}
+      width={1200} 
+      height={630} 
+      loading="eager"
+      decoding="async"
+      class="w-full h-auto rounded-lg shadow-md mb-8 object-cover" 
+    />
     <p class="text-[#1c51a7] text-center mb-8">Publicado el: {formatDate(entry.data.pubDate)}</p>
     <div class="content prose lg:prose-xl dark:prose-invert mx-auto">
       <Content />
@@ -106,7 +103,7 @@ const postImage = new URL(entry.data.image, Astro.site).toString();
         <article class="bg-[#f7dbed] dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:scale-105">
           <Image 
             src={post.data.image || placeholderImage}
-            alt={post.data.imageAlt || 'Imagen del post'}
+            alt={post.data.imageAlt || post.data.title}
             width={400}
             height={200}
             class="w-full h-48 object-cover"
