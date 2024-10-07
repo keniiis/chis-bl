@@ -9,12 +9,13 @@ export interface Props {
   modifiedDate?: string;
   author?: string;
   keywords?: string[];
-  // canonical?: string;
+  canonical?: string;
 }
 
 const { 
   title, 
-  description, 
+  description,
+  canonical,
   image,
   imageAlt,
   type,
@@ -28,7 +29,12 @@ const siteTitle = 'Chismesito Blog';
 const fullTitle = `${title} | ${siteTitle}`;
 const fullImageUrl = new URL(image, Astro.site).href;
 
-// const canonical = Astro.props.canonical || url.href;
+const determineCanonicalURL = () => {
+	if (Astro.url.host.includes("localhost")) return "http://localhost:4321"
+	return canonical || Astro.url.pathname
+}
+
+const canonicalURL = new URL(determineCanonicalURL(), Astro.site)
 ---
 
 <!-- Primary Meta Tags -->
@@ -37,6 +43,8 @@ const fullImageUrl = new URL(image, Astro.site).href;
 <meta name="description" content={description} />
 <meta name="author" content={author} />
 <meta name="keywords" content={keywords.join(', ')} />
+
+<link rel="canonical" href={canonicalURL} />
 
 <!-- Robots Meta Tag -->
 <meta name="robots" content="index, follow" />
