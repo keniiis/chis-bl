@@ -21,8 +21,7 @@ interface Props {
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 
-const url = new URL(Astro.url.pathname, Astro.site).toString();
-const canonicalURL = url;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
 
 // Obtener posts recientes
 const allPosts = await getCollection('blog');
@@ -57,7 +56,7 @@ const schemaBlogPost = {
   "dateModified": entry.data.updatedDate ? entry.data.updatedDate.toISOString() : entry.data.pubDate.toISOString(),
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": url
+    "@id": canonicalURL
   },
   "description": entry.data.description
 };
@@ -71,6 +70,8 @@ const schemaBlogPost = {
     imageAlt={entry.data.imageAlt || entry.data.title}
     canonicalURL={canonicalURL}
     type="article"
+    publishDate={entry.data.pubDate.toISOString()}
+    modifiedDate={entry.data.updatedDate ? entry.data.updatedDate.toISOString() : entry.data.pubDate.toISOString()}
   />
   <SchemaOrg schema={schemaBlogPost} />
   <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -92,7 +93,7 @@ const schemaBlogPost = {
       <Content />
     </div>
     <div class="mt-12">
-      <SocialShare url={url} title={entry.data.title} />
+      <SocialShare url={canonicalURL} title={entry.data.title} />
     </div>
   </article>
 

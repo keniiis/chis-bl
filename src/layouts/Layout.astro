@@ -10,10 +10,12 @@ export interface Props {
   title: string;
   description: string;
   image?: string;
+  imageAlt?: string;
   lang?: string;
 }
 
-const { title, description, image, lang = 'es' } = Astro.props;
+const { title, description, image, imageAlt, lang = 'es' } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 
 <!DOCTYPE html>
@@ -22,7 +24,13 @@ const { title, description, image, lang = 'es' } = Astro.props;
     <GoogleAnalytics />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <SEO title={title} description={description} image={image} />
+    <SEO 
+      title={title} 
+      description={description} 
+      image={image} 
+      imageAlt={imageAlt || title} 
+      canonicalURL={canonicalURL} 
+    />
     <meta name="generator" content={Astro.generator} />
     <ViewTransitions />
     <link rel="preconnect" href="https://fonts.googleapis.com">

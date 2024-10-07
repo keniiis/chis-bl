@@ -12,6 +12,8 @@ const placeholderImage = '/placeholder.jpg';
 // Configuración de la paginación
 const postsPerPage = 9;
 const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 
 <Layout title="Todos los Posts | Mi Blog en Astro" description="Explora todos los artículos de nuestro blog">

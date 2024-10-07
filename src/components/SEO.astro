@@ -5,7 +5,7 @@ export interface Props {
   image: string;
   imageAlt: string;
   canonicalURL: string;
-  type: 'website' | 'article';
+  type?: 'website' | 'article';
   publishDate?: string;
   modifiedDate?: string;
 }
@@ -16,7 +16,7 @@ const {
   image,
   imageAlt,
   canonicalURL,
-  type,
+  type = 'website',
   publishDate,
   modifiedDate
 } = Astro.props;
@@ -51,7 +51,7 @@ const fullImageUrl = new URL(image, Astro.site).href;
 <meta name="twitter:image:alt" content={imageAlt} />
 
 <!-- Canonical URL -->
-<link rel="canonical" href={canonicalURL} />
+<link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).toString()}>
 
 <!-- Favicon -->
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
