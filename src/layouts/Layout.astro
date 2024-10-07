@@ -12,6 +12,7 @@ export interface Props {
   image?: string;
   imageAlt?: string;
   lang?: string;
+  canonical?: string;
 }
 
 const { title, description, image, imageAlt, lang = 'es' } = Astro.props;
@@ -24,7 +25,7 @@ const url = new URL(Astro.request.url);
     <GoogleAnalytics />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="canonical" href={url.href} />
+    <link rel="canonical" href={Astro.props.canonical || url.href} />
     <SEO 
       title={title} 
       description={description} 

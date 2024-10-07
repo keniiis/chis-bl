@@ -9,6 +9,7 @@ export interface Props {
   modifiedDate?: string;
   author?: string;
   keywords?: string[];
+  // canonical?: string;
 }
 
 const { 
@@ -26,6 +27,8 @@ const {
 const siteTitle = 'Chismesito Blog';
 const fullTitle = `${title} | ${siteTitle}`;
 const fullImageUrl = new URL(image, Astro.site).href;
+
+// const canonical = Astro.props.canonical || url.href;
 ---
 
 <!-- Primary Meta Tags -->
