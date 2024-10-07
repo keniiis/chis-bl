@@ -4,10 +4,7 @@
     {
       "src": "/(.*)",
       "status": 301,
-      "headers": { "Location": "https://www.chismesito.cl/$1" },
-      "conditions": {
-        "protocol": "http"
-      }
+      "headers": { "Location": "https://www.chismesito.cl/$1" }
     }
   ],
   "headers": [
