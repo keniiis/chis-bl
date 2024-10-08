@@ -1,10 +1,16 @@
 ---
-import SEO from "@components/SEO.astro";
-import Layout from "@layouts/Layout.astro";
-const title = "Página no encontrada 🤭 - Chismesito";
+import Layout from "../layouts/Layout.astro";
+import SEO from "../components/SEO.astro";
+
+const title = "Página no encontrada 🤭";
 const description = "Lo sentimos, la página que estás buscando no existe o ha sido movida.";
 ---
-<SEO noindex={true}/>
+
+<SEO 
+title={title}
+description={description}
+noindex={true}
+/>
 <Layout title={title} description={description}>
   <main class="flex flex-col items-center justify-center min-h-screen bg-[#edc6de] text-gray-900 px-4">
     <h1 class="text-6xl font-bold mb-4">Error 404</h1>
