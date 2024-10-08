@@ -1,9 +1,8 @@
 {
     "redirects": [
         { 
-            "source": "https://www.chismesito.cl/blog/fallece-maggie-smith/",
-            "destination": "https://www.chismesito.cl/blog/fallece-maggie-smith",
-            "permanent": true
+            "source": "/:path*/",
+            "destination": "/:path*"
         }
     ]
   }
