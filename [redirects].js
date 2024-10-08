@@ -2,9 +2,9 @@ module.exports = {
     async redirects() {
       return [
         {
-          source: '/:path+/$',
+          source: '/:path/',
           destination: '/:path',
-          permanent: true,
+          permanent: false,
         },
       ]
     },
