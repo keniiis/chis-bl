@@ -7,9 +7,6 @@ import partytown from '@astrojs/partytown';
 
 export default defineConfig({
   site: 'https://www.chismesito.cl',
-  redirects: {
-    'https://www.chismesito.cl/blog/fallece-maggie-smith/': 'https://www.chismesito.cl/blog/fallece-maggie-smith/'
-  },
   integrations: [
     tailwind(),
     sitemap(),
