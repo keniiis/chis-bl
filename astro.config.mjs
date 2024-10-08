@@ -5,6 +5,8 @@ import sitemap from '@astrojs/sitemap';
 import robotsTxt from 'astro-robots-txt';
 import partytown from '@astrojs/partytown';
 
+const DEV = process.env.NODE_ENV === "development"
+
 export default defineConfig({
   site: 'https://www.chismesito.cl',
   integrations: [
@@ -27,7 +29,7 @@ export default defineConfig({
       },
     }),
   ],
-  trailingSlash: 'ignore',
+  trailingSlash: DEV ? 'always' : 'ignore',
   output: 'static',
   adapter: vercelStatic(),
 });
