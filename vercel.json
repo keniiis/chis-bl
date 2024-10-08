@@ -2,6 +2,13 @@
     "redirects": [
       {
         "source": "/:path*/",
+        "has": [
+          {
+            "type": "query",
+            "key": "_redirect",
+            "value": "false"
+          }
+        ],
         "destination": "/:path*",
         "permanent": true
       }
