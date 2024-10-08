@@ -1,6 +1,9 @@
 {
     "rewrites": [
-      { "source": "/:path*/", "destination": "/:path*/" },
-      { "source": "/:path*", "destination": "/:path*" }
+        { 
+        "source": "/:path*/", 
+        "destination": "https://www.chismesito.cl/blog/fallece-maggie-smith/:path*", 
+        "permanent": true
+        }
     ]
   }
