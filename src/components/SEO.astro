@@ -1,15 +1,16 @@
 ---
 export interface Props {
-  title: string;
-  description: string;
-  image: string;
-  imageAlt: string;
+  title?: string;
+  description?: string;
+  image?: string;
+  imageAlt?: string;
   type?: 'website' | 'article';
   publishDate?: string;
   modifiedDate?: string;
   author?: string;
   keywords?: string[];
   canonical?: string;
+  noindex?: boolean;
 }
 
 const { 
@@ -22,7 +23,8 @@ const {
   publishDate,
   modifiedDate,
   author = "Chismesito Team",
-  keywords = []
+  keywords = [],
+  noindex = false
 } = Astro.props;
 
 const siteTitle = 'Chismesito Blog';
@@ -47,7 +49,7 @@ const canonicalURL = new URL(determineCanonicalURL(), Astro.site)
 <link rel="canonical" href={canonicalURL} />
 
 <!-- Robots Meta Tag -->
-<meta name="robots" content="index, follow" />
+<meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content={type} />
