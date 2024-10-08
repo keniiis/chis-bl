@@ -27,6 +27,7 @@ export default defineConfig({
       },
     }),
   ],
+  trailingSlash: 'never',
   output: 'static',
   adapter: vercelStatic(),
 });
