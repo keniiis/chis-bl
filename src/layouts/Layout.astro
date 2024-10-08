@@ -13,9 +13,37 @@ export interface Props {
   imageAlt?: string;
   lang?: string;
   canonical?: string;
+  type?: 'website' | 'article';
+  publishDate?: string;
+  modifiedDate?: string;
+  author?: string;
+  keywords?: string[];
+  noindex?: boolean;
 }
 
-const { title, description, image, imageAlt, canonical, lang = 'es' } = Astro.props;
+const { 
+  title, 
+  description, 
+  image, 
+  imageAlt, 
+  canonical, 
+  lang = 'es',
+  type = 'website',
+  publishDate,
+  modifiedDate,
+  author = "Equipo Chismesito",
+  keywords = [],
+  noindex = false
+} = Astro.props;
+
+const siteTitle = 'Blog Chismesito';
+const fullTitle = `${title} | ${siteTitle}`;
+const fullImageUrl = image ? new URL(image, Astro.site).href : undefined;
+
+const determineCanonicalURL = () => {
+  if (Astro.url.host.includes("localhost")) return "http://localhost:4321"
+  return canonical || Astro.url.pathname
+}
 ---
 
 <!DOCTYPE html>
@@ -25,11 +53,17 @@ const { title, description, image, imageAlt, canonical, lang = 'es' } = Astro.pr
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <SEO 
-      title={title} 
+      title={fullTitle} 
       description={description} 
-      image={image} 
+      image={fullImageUrl} 
       imageAlt={imageAlt || title} 
       canonical={canonical}
+      type={type}
+      publishDate={publishDate}
+      modifiedDate={modifiedDate}
+      author={author}
+      keywords={keywords}
+      noindex={noindex}
     />
     <meta name="generator" content={Astro.generator} />
     <ViewTransitions />
