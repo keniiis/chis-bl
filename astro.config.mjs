@@ -6,7 +6,6 @@ import robotsTxt from 'astro-robots-txt';
 import partytown from '@astrojs/partytown';
 
 export default defineConfig({
-  output: 'dist',
   site: 'https://www.chismesito.cl',
   integrations: [
     tailwind(),
