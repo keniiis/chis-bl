@@ -2,8 +2,7 @@
     "redirects": [
         { 
             "source": "https://www.chismesito.cl//:path*/",
-            "destination": "https://www.chismesito.cl//:path*",
-            "permanent": false
+            "destination": "https://www.chismesito.cl//:path*"
         }
     ]
   }
