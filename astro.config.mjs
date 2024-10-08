@@ -31,11 +31,4 @@ export default defineConfig({
   trailingSlash: 'never',
   output: 'static',
   adapter: vercelStatic(),
-  redirects: [
-    {
-      "source": "/:path*/",
-      "destination": "/:path*",
-      "permanent": false
-    }
-  ]
 });
