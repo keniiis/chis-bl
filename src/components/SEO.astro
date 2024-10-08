@@ -28,6 +28,13 @@ const {
 } = Astro.props;
 
 const siteTitle = 'Blog Chismesito';
+
+const determineCanonicalURL = () => {
+  if (Astro.url.host.includes("localhost")) return "http://localhost:4321"
+  return canonical || Astro.url.pathname
+}
+
+const canonicalURL = new URL(determineCanonicalURL(), Astro.site)
 ---
 
 <!-- Etiquetas Meta Primarias -->
@@ -37,7 +44,7 @@ const siteTitle = 'Blog Chismesito';
 <meta name="author" content={author} />
 <meta name="keywords" content={keywords.join(', ')} />
 
-<link rel="canonical" href={canonical} />
+<link rel="canonical" href={canonicalURL} />
 
 <!-- Etiqueta Meta de Robots -->
 <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />

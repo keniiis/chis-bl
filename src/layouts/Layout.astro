@@ -39,11 +39,6 @@ const {
 const siteTitle = 'Blog Chismesito';
 const fullTitle = `${title} | ${siteTitle}`;
 const fullImageUrl = image ? new URL(image, Astro.site).href : undefined;
-
-const determineCanonicalURL = () => {
-  if (Astro.url.host.includes("localhost")) return "http://localhost:4321"
-  return canonical || Astro.url.pathname
-}
 ---
 
 <!DOCTYPE html>
