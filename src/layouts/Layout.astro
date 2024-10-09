@@ -35,8 +35,6 @@ const {
   noindex = false
 } = Astro.props;
 
-const siteTitle = 'Blog Chismesito';
-const fullTitle = `${title} | ${siteTitle}`;
 const fullImageUrl = image ? new URL(image, Astro.site).toString() : undefined;
 
 const determineCanonicalURL = () => {
@@ -53,7 +51,7 @@ const canonicalURL = determineCanonicalURL();
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <SEO 
-      title={fullTitle} 
+      title={title} 
       description={description} 
       image={fullImageUrl} 
       imageAlt={imageAlt || title} 
