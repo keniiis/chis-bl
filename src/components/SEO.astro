@@ -28,7 +28,7 @@ const {
 } = Astro.props;
 
 const siteTitle = 'Blog Chismesito';
-const fullTitle = `${title} | ${siteTitle}`;
+const fullTitle = `${title}`;
 const fullImageUrl = image ? new URL(image, Astro.site).toString() : new URL('/Chismesito_logo_negro.svg', Astro.site).toString();
 
 const determineCanonicalURL = () => {
