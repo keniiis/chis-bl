@@ -1,5 +1,5 @@
 ---
-title: 'Pablo Herrera genera polémica en Sin Filtros: "Prefiero ser cuico, ser pobre es muy difícil"'
+title: 'Pablo Herrera: "Prefiero ser cuico, ser pobre es muy difícil"'
 author: 'Team Chismesito'
 description: 'El cantante chileno Pablo Herrera desató controversia con sus declaraciones sobre las diferencias sociales en Chile.'
 pubDate: 2024-10-09
