@@ -33,7 +33,7 @@ const recentPosts = allPosts
 // Imagen de marcador de posición
 const placeholderImage = '/placeholder.jpg';
 
-const postImage = entry.data.image ? new URL(entry.data.image, Astro.site).href : new URL(placeholderImage, Astro.site).href;
+const postImage = entry.data.image || placeholderImage;
 
 const schemaBlogPost = {
   "@context": "https://schema.org",
