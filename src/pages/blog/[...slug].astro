@@ -3,7 +3,6 @@ import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import { formatDate } from '../../utils/dateUtils';
-import SEO from '../../components/SEO.astro';
 import SchemaOrg from '../../components/SchemaOrg.astro';
 import SocialShare from '../../components/SocialShare.astro';
 import RecentPosts from '../../components/RecentPosts.astro';
@@ -48,19 +47,18 @@ const schemaBlogPost = {
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 
-<Layout title={entry.data.title} description={entry.data.description}>
-  <SEO 
-    title={entry.data.title}
-    description={entry.data.description}
-    image={fullImageUrl}
-    imageAlt={entry.data.imageAlt || entry.data.title}
-    canonical={canonicalURL}
-    type="article"
-    publishDate={entry.data.pubDate.toISOString()}
-    modifiedDate={entry.data.updatedDate ? entry.data.updatedDate.toISOString() : entry.data.pubDate.toISOString()}
-    author={entry.data.author || "Chismesito Team"}
-    keywords={keywords}
-  />
+<Layout 
+  title={entry.data.title}
+  description={entry.data.description}
+  image={fullImageUrl}
+  imageAlt={entry.data.imageAlt || entry.data.title}
+  canonical={canonicalURL}
+  type="article"
+  publishDate={entry.data.pubDate.toISOString()}
+  modifiedDate={entry.data.updatedDate ? entry.data.updatedDate.toISOString() : entry.data.pubDate.toISOString()}
+  author={entry.data.author || "Chismesito Team"}
+  keywords={keywords}
+>
   <SchemaOrg schema={schemaBlogPost} />
   <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
     <header class="mb-8">

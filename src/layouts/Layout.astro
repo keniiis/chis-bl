@@ -1,5 +1,4 @@
 ---
-import GoogleAnalytics from '@components/GoogleAnalytics.astro';
 import { ViewTransitions } from 'astro:transitions';
 import '../styles/global.css';
 import SEO from '../components/SEO.astro';
@@ -38,13 +37,19 @@ const {
 
 const siteTitle = 'Blog Chismesito';
 const fullTitle = `${title} | ${siteTitle}`;
-const fullImageUrl = image ? new URL(image, Astro.site).href : undefined;
+const fullImageUrl = image ? new URL(image, Astro.site).toString() : undefined;
+
+const determineCanonicalURL = () => {
+  if (Astro.url.host.includes("localhost")) return "http://localhost:4321"
+  return new URL(canonical || Astro.url.pathname, Astro.site).toString();
+}
+
+const canonicalURL = determineCanonicalURL();
 ---
 
 <!DOCTYPE html>
 <html lang={lang} class="transition-colors duration-300">
   <head>
-    <GoogleAnalytics />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <SEO 
@@ -52,7 +57,7 @@ const fullImageUrl = image ? new URL(image, Astro.site).href : undefined;
       description={description} 
       image={fullImageUrl} 
       imageAlt={imageAlt || title} 
-      canonical={canonical}
+      canonical={canonicalURL}
       type={type}
       publishDate={publishDate}
       modifiedDate={modifiedDate}
