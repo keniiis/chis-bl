@@ -8,7 +8,7 @@ export interface Props {
   publishDate?: string;
   modifiedDate?: string;
   author?: string;
-  keywords?: string[];
+  // keywords?: string[];
   canonical?: string;
   noindex?: boolean;
 }
@@ -23,7 +23,7 @@ const {
   publishDate,
   modifiedDate,
   author = "Equipo Chismesito",
-  keywords = [],
+  // keywords = [],
   noindex = false
 } = Astro.props;
 
@@ -44,7 +44,7 @@ const canonicalURL = determineCanonicalURL();
 <meta name="title" content={fullTitle} />
 <meta name="description" content={description} />
 <meta name="author" content={author} />
-<meta name="keywords" content={keywords.join(', ')} />
+<!-- <meta name="keywords" content={keywords.join(', ')} /> -->
 
 <link rel="canonical" href={canonicalURL} />
 
