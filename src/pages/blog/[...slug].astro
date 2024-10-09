@@ -1,11 +1,13 @@
 ---
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import { formatDate } from '../../utils/dateUtils';
 import SEO from '../../components/SEO.astro';
 import SchemaOrg from '../../components/SchemaOrg.astro';
 import SocialShare from '../../components/SocialShare.astro';
-import { Image } from 'astro:assets';
-import { formatDate } from '../../utils/dateUtils';
+import RecentPosts from '../../components/RecentPosts.astro';
+import Ad from '../../components/Ad.astro';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog');
@@ -14,55 +16,36 @@ export async function getStaticPaths() {
   }));
 }
 
-interface Props {
-  entry: CollectionEntry<'blog'>;
-}
-
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+const fullImageUrl = entry.data.image ? new URL(entry.data.image, Astro.site).toString() : undefined;
 
-// Obtener posts recientes
-const allPosts = await getCollection('blog');
-const recentPosts = allPosts
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .filter(post => post.slug !== entry.slug)
-  .slice(0, 3);
-
-// Imagen de marcador de posición
-const placeholderImage = '/placeholder.jpg';
-
-const postImage = entry.data.image || placeholderImage;
-const fullImageUrl = new URL(postImage, Astro.site).toString();
+const keywords = ['chismesito', 'blog', 'noticias', 'entretenimiento', entry.data.title.toLowerCase()];
 
 const schemaBlogPost = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": entry.data.title,
   "image": fullImageUrl,
+  "datePublished": entry.data.pubDate.toISOString(),
+  "dateModified": entry.data.updatedDate ? entry.data.updatedDate.toISOString() : entry.data.pubDate.toISOString(),
   "author": {
     "@type": "Person",
     "name": entry.data.author || "Chismesito Team"
   },
   "publisher": {
     "@type": "Organization",
-    "name": "Chismesito Blog",
+    "name": "Chismesito",
     "logo": {
       "@type": "ImageObject",
-      "url": new URL("/logo.png", Astro.site).href
+      "url": "https://chismesito.cl/logo.png"
     }
-  },
-  "datePublished": entry.data.pubDate.toISOString(),
-  "dateModified": entry.data.updatedDate ? entry.data.updatedDate.toISOString() : entry.data.pubDate.toISOString(),
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": canonicalURL
   },
   "description": entry.data.description
 };
 
-const keywords = ['Gran Hermano', 'Cony Capelli', 'Reality Show', 'Televisión Chilena'];
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 
 <Layout title={entry.data.title} description={entry.data.description}>
@@ -79,52 +62,35 @@ const keywords = ['Gran Hermano', 'Cony Capelli', 'Reality Show', 'Televisión C
     keywords={keywords}
   />
   <SchemaOrg schema={schemaBlogPost} />
-  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <h1 class="text-texto-principal text-balance text-center leading-tight font-bold mb-8 text-black dark:text-[#db7e45]">
-      {entry.data.title}
-    </h1>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header class="mb-8">
+      <h1 class="text-4xl font-bold mb-2 text-gray-900 dark:text-gray-100">{entry.data.title}</h1>
+      <p class="text-gray-600 dark:text-gray-400 mb-4">
+        Por {entry.data.author || "Chismesito Team"} | Publicado el {formatDate(entry.data.pubDate)}
+        {entry.data.updatedDate && ` | Actualizado el ${formatDate(entry.data.updatedDate)}`}
+      </p>
+    </header>
     
-    <Image 
-      src={postImage}
-      alt={entry.data.imageAlt || entry.data.title}
-      width={1200} 
-      height={630} 
-      loading="eager"
-      decoding="async"
-      class="w-full h-auto rounded-lg shadow-md mb-8 object-cover" 
-    />
-    <p class="text-[#1c51a7] text-center mb-8">Publicado el: {formatDate(entry.data.pubDate)}</p>
-    <div class="content prose lg:prose-xl dark:prose-invert mx-auto">
+    {entry.data.image && (
+      <Image
+        src={entry.data.image}
+        alt={entry.data.imageAlt || entry.data.title}
+        width={1200}
+        height={630}
+        class="w-full h-auto rounded-lg mb-8 shadow-lg"
+      />
+    )}
+    
+    <div class="prose prose-lg max-w-none mb-12 text-gray-800 dark:text-gray-200">
       <Content />
     </div>
-    <div class="mt-12">
-      <SocialShare url={canonicalURL} title={entry.data.title} />
-    </div>
+    
+    <SocialShare url={Astro.url} title={entry.data.title} />
+    
+    <Ad type="popunder" />
   </article>
-
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <h2 class="text-3xl font-bold mb-8 text-gray-800 dark:text-gray-200">Posts Recientes</h2>
-    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-      {recentPosts.map((post) => (
-        <article class="bg-[#f7dbed] dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden transition-transform duration-300 hover:scale-105">
-          <Image 
-            src={post.data.image || placeholderImage}
-            alt={post.data.imageAlt || post.data.title}
-            width={400}
-            height={200}
-            class="w-full h-48 object-cover"
-          />
-          <div class="p-6 flex flex-col justify-between h-[300px]">
-            <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-gray-100">{post.data.title}</h3>
-            <p class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">{post.data.description}</p>
-            <a href={`/blog/${post.slug}`} class="inline-block bg-black text-white py-2 px-4 rounded-3xl hover:bg-[#272727] transition-colors duration-300 ease-in-out w-fit">
-              Leer más
-            </a>
-          </div>
-        </article>
-      ))}
-    </div>
-  </section>
+  
+  <RecentPosts />
 </Layout>
 
 <style>
