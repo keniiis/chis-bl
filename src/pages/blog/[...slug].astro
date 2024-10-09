@@ -34,12 +34,13 @@ const recentPosts = allPosts
 const placeholderImage = '/placeholder.jpg';
 
 const postImage = entry.data.image || placeholderImage;
+const fullImageUrl = new URL(postImage, Astro.site).toString();
 
 const schemaBlogPost = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": entry.data.title,
-  "image": postImage,
+  "image": fullImageUrl,
   "author": {
     "@type": "Person",
     "name": entry.data.author || "Chismesito Team"
@@ -68,7 +69,7 @@ const keywords = ['Gran Hermano', 'Cony Capelli', 'Reality Show', 'Televisión C
   <SEO 
     title={entry.data.title}
     description={entry.data.description}
-    image={postImage}
+    image={fullImageUrl}
     imageAlt={entry.data.imageAlt || entry.data.title}
     canonical={canonicalURL}
     type="article"
