@@ -29,7 +29,7 @@ const {
 
 const siteTitle = 'Blog Chismesito';
 const fullTitle = `${title} | ${siteTitle}`;
-const fullImageUrl = image || '/Chismesito_logo_negro.svg';
+const fullImageUrl = image ? new URL(image, Astro.site).toString() : new URL('/Chismesito_logo_negro.svg', Astro.site).toString();
 
 const determineCanonicalURL = () => {
   if (Astro.url.host.includes("localhost")) return "http://localhost:4321"
